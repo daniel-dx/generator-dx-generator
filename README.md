@@ -8,14 +8,14 @@
 
 ## Getting started
 
-- Install: `npm install -g generator-generator`
-- Run: `yo generator`
+- Install: `npm install -g generator-dx-generator`
+- Run: `yo dx-generator`
 
 
 ## Commands
 
-* `yo generator` shows a wizard for generating a new generator
-* `yo generator:subgenerator <name>` generates a subgenerator with the name `<name>`
+* `yo dx-generator` shows a wizard for generating a new generator
+* `yo dx-generator:subgenerator <name>` generates a subgenerator with the name `<name>`
 
 
 ## What do you get?
@@ -27,6 +27,8 @@ Scaffolds out a complete generator directory structure for you:
 ├── generators/
 │   └── app/
 │       ├── index.js
+│       │── logger.js
+│       │── utils.js
 │       └── templates/
 │           └── dummyfile.txt
 ├── .editorconfig

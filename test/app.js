@@ -37,7 +37,8 @@ describe('generator:app', function () {
           authorEmail: 'hi@yeoman.io',
           authorUrl: 'http://yeoman.io',
           keywords: [],
-          license: 'MIT'
+          license: 'MIT',
+          seedUrl: 'https://github.com/danielxiaowxx/vue-seed.git'
         })
         .toPromise();
     });
@@ -51,6 +52,8 @@ describe('generator:app', function () {
         'README.md',
         'package.json',
         'generators/app/index.js',
+        'generators/app/logger.js',
+        'generators/app/utils.js',
         'generators/app/templates/dummyfile.txt',
         'test/app.js'
       ];

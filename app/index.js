@@ -1,4 +1,5 @@
 'use strict';
+
 var path = require('path');
 var generators = require('yeoman-generator');
 var askName = require('inquirer-npm-name');
@@ -29,6 +30,18 @@ module.exports = generators.Base.extend({
     }, this).then(function (props) {
       this.props.name = props.name;
     }.bind(this));
+  },
+
+  promptForSeed: function() {
+    var prompt = {
+      name   : 'seedUrl',
+      message: 'What is your seed project url? ',
+      default: 'https://github.com/[username]/[seed project name].git'
+    };
+
+    return this.prompt(prompt).then(props => {
+      this.props.seedUrl = props.seedUrl;
+    });
   },
 
   default: function () {
@@ -67,10 +80,13 @@ module.exports = generators.Base.extend({
   },
 
   writing: function () {
+
+    // update package.json
     var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     extend(pkg, {
       dependencies: {
         'yeoman-generator': '^0.23.0',
+        'underscore.string': '^3.2.2',
         chalk: '^1.0.0',
         yosay: '^1.0.0'
       },
@@ -83,6 +99,18 @@ module.exports = generators.Base.extend({
     pkg.keywords.push('yeoman-generator');
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+
+    // add templates
+    this.fs.copyTpl(
+      this.templatePath('libs'),
+      this.destinationPath('generators/app'));
+    this.on('end', () => {
+      this.fs.copyTpl(
+        this.templatePath('index.js'),
+        this.destinationPath(path.join('generators', 'app', 'index.js')),
+        this.props
+      );
+    })
   },
 
   install: function () {

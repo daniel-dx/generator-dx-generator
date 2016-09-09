@@ -1,8 +1,8 @@
 {
-  "name": "generator-generator",
-  "version": "1.2.1",
+  "name": "generator-dx-generator",
+  "version": "1.0.1",
   "description": "Generate a Yeoman generator",
-  "author": "Yeoman team",
+  "author": "Yeoman team & Daniel.Xiao",
   "files": [
     "app",
     "subgenerator"
