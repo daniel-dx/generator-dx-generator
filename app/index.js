@@ -14,25 +14,23 @@ function makeGeneratorName(name) {
 }
 
 module.exports = generators.Base.extend({
-  initializing: function () {
+  initializing() {
     this.props = {};
   },
 
-  prompting: function () {
+  prompting() {
     return askName({
       name: 'name',
       message: 'Your generator name',
       default: makeGeneratorName(path.basename(process.cwd())),
       filter: makeGeneratorName,
-      validate: function (str) {
-        return str.length > 'generator-'.length;
-      }
-    }, this).then(function (props) {
+      validate: str => str.length > 'generator-'.length
+    }, this).then(props => {
       this.props.name = props.name;
-    }.bind(this));
+    });
   },
 
-  promptForSeed: function() {
+  promptForSeed() {
     var prompt = {
       name   : 'seedUrl',
       message: 'What is your seed project url? ',
@@ -44,7 +42,7 @@ module.exports = generators.Base.extend({
     });
   },
 
-  default: function () {
+  default() {
     if (path.basename(this.destinationPath()) !== this.props.name) {
       this.log(
         'Your generator must be inside a folder named ' + this.props.name + '\n' +
@@ -79,7 +77,7 @@ module.exports = generators.Base.extend({
     });
   },
 
-  writing: function () {
+  writing() {
 
     // update package.json
     var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
@@ -113,7 +111,7 @@ module.exports = generators.Base.extend({
     })
   },
 
-  install: function () {
+  install() {
     this.installDependencies({bower: false});
   }
 });

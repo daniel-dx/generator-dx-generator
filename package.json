@@ -1,7 +1,7 @@
 {
   "name": "generator-dx-generator",
   "version": "1.0.1",
-  "description": "Generate a Yeoman generator",
+  "description": "Generate a Yeoman generator of dx style",
   "author": "Yeoman team & Daniel.Xiao",
   "files": [
     "app",
@@ -16,13 +16,13 @@
     "create",
     "boilerplate"
   ],
-  "repository": "yeoman/generator-generator",
+  "repository": "https://github.com/daniel-dx/generator-dx-generator.git",
   "scripts": {
     "test": "gulp",
-    "prepublish": "gulp prepublish"
+    "prepublish": "gulp nsp"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "dependencies": {
     "chalk": "^1.0.0",

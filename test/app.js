@@ -28,6 +28,7 @@ describe('generator:app', function () {
   describe('defaults', function () {
     before(function () {
       return helpers.run(path.join(__dirname, '../app'))
+        .inDir(path.join(__dirname, '../temp'))
         .withPrompts({
           name: 'generator-temp',
           description: 'A node generator',
