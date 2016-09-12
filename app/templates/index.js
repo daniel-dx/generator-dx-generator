@@ -52,15 +52,15 @@ module.exports = yeoman.Base.extend({
    * Clone seed project
    */
   cloneRepo() {
-    logger.green('Cloning the seed repo.......');
-    return util.exec('git clone <%= seedUrl %> --branch master --single-branch ' + folder);
+    logger.green('Cloning the remote seed repo.......');
+    return utils.exec('git clone <%= seedUrl %> --branch master --single-branch ' + folder);
   },
 
   /**
    * 删除clone下来的种子项目的git远程信息
    */
   rmGitRemote() {
-    return util.exec('cd ' + folder + ' && git remote remove origin');
+    return utils.exec('cd ' + folder + ' && git remote remove origin');
   },
 
   /**
@@ -101,14 +101,14 @@ module.exports = yeoman.Base.extend({
    * 更新package.json数据
    */
   updatePackage() {
-    var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+    var pkg = this.fs.readJSON(this.destinationPath(folder + '/package.json'), {});
     extend(pkg, {
       name: this.appName,
       description: this.appDescription,
       author: this.appAuthor,
       keywords: this.appKeywords
     });
-    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+    this.fs.writeJSON(this.destinationPath(folder + '/package.json'), pkg);
   },
 
   /**
@@ -117,17 +117,21 @@ module.exports = yeoman.Base.extend({
   installing() {
     logger.green('Running npm install for you....');
     logger.green('This may take a couple minutes.');
-    this.npmInstall(() => {
-      logger.log('');
-      logger.green('------------------------------------------');
-      logger.green('Your application project is ready!');
-      logger.log('');
-      logger.green('To Get Started, run the following command:');
-      logger.log('');
-      logger.yellow('cd ' + folder + ' && npm run dev'); // TODO 根据实际情况进行修改
-      logger.log('');
-      logger.green('Happy Hacking!');
-      logger.green('------------------------------------------');
-    })
+    this.installDependencies({
+      bower: false,
+      npm: true,
+      callback: function () {
+        logger.log('');
+        logger.green('------------------------------------------');
+        logger.green('Your application project is ready!');
+        logger.log('');
+        logger.green('To Get Started, run the following command:');
+        logger.log('');
+        logger.yellow('cd ' + folder + ' && npm run dev'); // TODO 根据实际情况进行修改
+        logger.log('');
+        logger.green('Happy Hacking!');
+        logger.green('------------------------------------------');
+      }
+    });
   }
 });

@@ -4,7 +4,7 @@ var generators = require('yeoman-generator');
 var superb = require('superb');
 
 module.exports = generators.Base.extend({
-  constructor: function () {
+  constructor: function() {
     generators.Base.apply(this, arguments);
 
     this.argument('namespace', {
@@ -14,17 +14,13 @@ module.exports = generators.Base.extend({
     });
   },
 
-  writing: function () {
+  writing() {
+
     var generatorName = this.fs.readJSON(this.destinationPath('package.json')).name;
 
     this.fs.copyTpl(
       this.templatePath('index.js'),
-      this.destinationPath(path.join('generators', this.namespace, 'index.js')),
-      {
-        // Escape apostrophes from superb to not conflict with JS strings
-        superb: superb().replace('\'', '\\\''),
-        generatorName: generatorName
-      }
+      this.destinationPath(path.join('generators', this.namespace, 'index.js'))
     );
 
     this.fs.copy(

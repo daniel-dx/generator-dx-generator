@@ -17,14 +17,9 @@ describe('generator:subgenerator', function () {
     });
 
     return helpers.run(path.join(__dirname, '../subgenerator'))
+      .inDir(path.join(__dirname, '../temp/generator-temp'))
       .withArguments(['foo'])
       .withOptions({force: true})
-      .inTmpDir(function (tmpDir) {
-        fs.writeFileSync(
-          path.join(tmpDir, 'package.json'),
-          '{"name": "generator-foo", "files":[]}'
-        );
-      })
       .toPromise();
   });
 
@@ -39,13 +34,5 @@ describe('generator:subgenerator', function () {
       'test/foo.js'
     ]);
   });
-
-  it('configures the test file', function () {
-    assert.fileContent('test/foo.js', 'describe(\'generator-foo:foo');
-    assert.fileContent('test/foo.js', '../generators/foo');
-  });
-
-  it('escapes possible apostrophes from superb', function () {
-    assert.fileContent('generators/foo/index.js', 'Welcome to the cat\\\'s meow');
-  });
+  
 });

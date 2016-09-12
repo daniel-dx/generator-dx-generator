@@ -67,12 +67,14 @@ describe('generator:app', function () {
         name: 'generator-temp',
         dependencies: {
           'yeoman-generator': '^0.23.0',
+          'underscore.string': '^3.2.2',
+          'deep-extend': '^0.4.0',
           chalk: '^1.0.0',
           yosay: '^1.0.0'
         },
         devDependencies: {
-          'yeoman-assert': '^2.0.0',
-          'yeoman-test': '^1.0.0'
+          'mocha': '^2.2.5',
+          'mockery': '^1.4.0'
         },
         keywords: ['yeoman-generator']
       });

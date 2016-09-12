@@ -69,12 +69,6 @@ module.exports = generators.Base.extend({
     }, {
       local: require('generator-node').app
     });
-
-    this.composeWith('generator:subgenerator', {
-      arguments: ['app']
-    }, {
-      local: require.resolve('../subgenerator')
-    });
   },
 
   writing() {
@@ -85,12 +79,13 @@ module.exports = generators.Base.extend({
       dependencies: {
         'yeoman-generator': '^0.23.0',
         'underscore.string': '^3.2.2',
+        'deep-extend': '^0.4.0',
         chalk: '^1.0.0',
         yosay: '^1.0.0'
       },
       devDependencies: {
-        'yeoman-test': '^1.0.0',
-        'yeoman-assert': '^2.0.0'
+        'mocha': '^2.2.5',
+        'mockery': '^1.4.0'
       }
     });
     pkg.keywords = pkg.keywords || [];
@@ -101,14 +96,18 @@ module.exports = generators.Base.extend({
     // add templates
     this.fs.copyTpl(
       this.templatePath('libs'),
-      this.destinationPath('generators/app'));
-    this.on('end', () => {
-      this.fs.copyTpl(
-        this.templatePath('index.js'),
-        this.destinationPath(path.join('generators', 'app', 'index.js')),
-        this.props
-      );
-    })
+      this.destinationPath('generators/app')
+    );
+    this.fs.copyTpl(
+      this.templatePath('index.js'),
+      this.destinationPath(path.join('generators', 'app', 'index.js')),
+      this.props
+    );
+    this.fs.copyTpl(
+      this.templatePath('test.js'),
+      this.destinationPath(path.join('test', 'app.js')),
+      this.props
+    );
   },
 
   install() {

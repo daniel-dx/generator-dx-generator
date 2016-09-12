@@ -7,7 +7,9 @@ describe('<%- generatorName %>:<%- namespace %>', function () {
   before(function () {
     return helpers.run(path.join(__dirname, '../generators/<%- namespace %>'))
       .inDir(path.join(__dirname, '../temp'))
-      .withPrompts({someAnswer: true})
+      .withPrompts({
+        // name: 'sub',
+      })
       .toPromise();
   });
 
