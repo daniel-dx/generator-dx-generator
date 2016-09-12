@@ -117,21 +117,24 @@ module.exports = yeoman.Base.extend({
   installing() {
     logger.green('Running npm install for you....');
     logger.green('This may take a couple minutes.');
-    this.installDependencies({
-      bower: false,
-      npm: true,
-      callback: function () {
-        logger.log('');
-        logger.green('------------------------------------------');
-        logger.green('Your application project is ready!');
-        logger.log('');
-        logger.green('To Get Started, run the following command:');
-        logger.log('');
-        logger.yellow('cd ' + folder + ' && npm run dev'); // TODO 根据实际情况进行修改
-        logger.log('');
-        logger.green('Happy Hacking!');
-        logger.green('------------------------------------------');
-      }
+
+    utils.exec('cd ' + folder).then(() => {
+      this.installDependencies({
+        bower: false,
+        npm: true,
+        callback: function () {
+          logger.log('');
+          logger.green('------------------------------------------');
+          logger.green('Your application project is ready!');
+          logger.log('');
+          logger.green('To Get Started, run the following command:');
+          logger.log('');
+          logger.yellow('cd ' + folder + ' && npm run dev'); // TODO 根据实际情况进行修改
+          logger.log('');
+          logger.green('Happy Hacking!');
+          logger.green('------------------------------------------');
+        }
+      });
     });
   }
 });

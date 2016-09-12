@@ -6,7 +6,6 @@ var path = require('path');
 var s = require('underscore.string');
 var yeoman = require('yeoman-generator');
 
-var common = require('../app/common');
 var logger = require('../app/logger');
 var util = require('../app/util');
 
