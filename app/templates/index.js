@@ -106,7 +106,7 @@ module.exports = yeoman.Base.extend({
       name: this.appName,
       description: this.appDescription,
       author: this.appAuthor,
-      keywords: this.appKeywords
+      keywords: this.appKeywords.split(',')
     });
     this.fs.writeJSON(this.destinationPath(folder + '/package.json'), pkg);
   },
