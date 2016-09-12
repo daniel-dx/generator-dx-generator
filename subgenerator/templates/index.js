@@ -7,7 +7,7 @@ var s = require('underscore.string');
 var yeoman = require('yeoman-generator');
 
 var logger = require('../app/logger');
-var util = require('../app/util');
+var utils = require('../app/utils');
 
 var scrFolderPath, scrFolder;
 
@@ -19,7 +19,7 @@ module.exports = yeoman.Base.extend({
     //   type: 'string',
     //   name: 'name',
     //   message: 'Would you like to enable this option?',
-    //   default: true
+    //   default: 'name'
     // }];
 
     // return this.prompt(prompts).then(props => {
@@ -45,7 +45,7 @@ module.exports = yeoman.Base.extend({
     // glob(this.templatePath() + "/**/*.*", {}, (er, files) => {
     //   _.each(files, filePath => {
     //     var toFileName = path.parse(filePath).base;
-    //     self.fs.copyTpl(
+    //     this.fs.copyTpl(
     //       filePath,
     //       path.resolve(scrFolderPath, toFileName),
     //       this.props
@@ -60,7 +60,7 @@ module.exports = yeoman.Base.extend({
   updateContent() {
 
     // var fullPath = 'src/components/App.vue';
-    // util.rewriteFile({
+    // utils.rewriteFile({
     //   file      : fullPath,
     //   insertPrev: true,
     //   needle    : "<!-- Don't touch me -->",
