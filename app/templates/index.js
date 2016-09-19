@@ -91,7 +91,7 @@ module.exports = yeoman.Base.extend({
       this.appKeywords = props.appKeywords;
       this.appAuthor = props.appAuthor;
 
-      this.slugifiedAppName = s(this.appName).slugify().value();
+      this.slugifiedAppName = s(this.appName).underscored().slugify().value();
       this.humanizedAppName = s(this.appName).humanize().value();
       this.capitalizedAppAuthor = s(this.appAuthor).capitalize().value();
     });
