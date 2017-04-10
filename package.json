@@ -33,7 +33,8 @@
     "mkdirp": "^0.5.1",
     "superb": "^1.0.0",
     "yeoman-generator": "^0.23.3",
-    "yosay": "^1.0.2"
+    "yosay": "^1.0.2",
+    "fs-extra": "^2.1.2"
   },
   "devDependencies": {
     "gulp": "^3.6.0",

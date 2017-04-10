@@ -6,6 +6,7 @@ var yosay = require('yosay');
 var extend = require('deep-extend');
 var s = require('underscore.string');
 var yeoman = require('yeoman-generator');
+var fs = require('fs-extra');
 
 var logger = require('./logger');
 var utils = require('./utils');
@@ -15,6 +16,13 @@ var utils = require('./utils');
 var folder, folderPath;
 
 module.exports = yeoman.Base.extend({
+
+  /**
+   * init
+   */
+  init() {
+    this.conflicter.force = true; // 冲突直接替换, 不再询问
+  },
 
   /**
    * 检查git是否安装
@@ -57,10 +65,10 @@ module.exports = yeoman.Base.extend({
   },
 
   /**
-   * 删除clone下来的种子项目的git远程信息
+   * 删除clone下来的种子项目的git信息
    */
-  rmGitRemote() {
-    return utils.exec('cd ' + folder + ' && git remote remove origin');
+  rmGitInfo() {
+    fs.removeSync(folderPath + '.git');
   },
 
   /**
