@@ -1,9 +1,9 @@
 'use strict';
 
-var path = require('path');
-var mockery = require('mockery');
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
+const path = require('path');
+const mockery = require('mockery');
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
 
 describe('<%= name %>:app', function () {
 
@@ -43,5 +43,5 @@ describe('<%= name %>:app', function () {
       ]);
     });
   });
- 
+
 });

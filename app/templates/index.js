@@ -1,19 +1,18 @@
 'use strict';
 
-var path = require('path');
-var chalk = require('chalk');
-var yosay = require('yosay');
-var extend = require('deep-extend');
-var s = require('underscore.string');
-var yeoman = require('yeoman-generator');
-var fs = require('fs-extra');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const extend = require('deep-extend');
+const s = require('underscore.string');
+const yeoman = require('yeoman-generator');
+const fs = require('fs-extra');
 
-var logger = require('./logger');
-var utils = require('./utils');
+const logger = require('./logger');
+const utils = require('./utils');
 
 
 // Global Variables
-var folder, folderPath;
+let folder, folderPath;
 
 module.exports = yeoman.Base.extend({
 
@@ -44,10 +43,10 @@ module.exports = yeoman.Base.extend({
    * 询问项目的所在目录名
    */
   promptForFolder() {
-    var prompt = {
+    const prompt = {
       name   : 'folder',
       message: 'In which folder would you like the project to be generated? ',
-      default: '<%= name %>'
+      default: 'demo-project'
     };
 
     return this.prompt(prompt).then(props => {
@@ -76,18 +75,18 @@ module.exports = yeoman.Base.extend({
    */
   getPrompts() {
 
-    var prompts = [{
+    const prompts = [{
       name   : 'appName',
       message: 'What would you like to call your application?',
       default: folder
     }, {
       name   : 'appDescription',
       message: 'How would you describe your application?',
-      default: 'Activity project with Vue'
+      default: ''
     }, {
       name   : 'appKeywords',
-      message: 'How would you describe your application in comma seperated key words?',
-      default: 'activity vue'
+      message: 'How would you describe your application in comma seperated keywords?',
+      default: ''
     }, {
       name   : 'appAuthor',
       message: 'What is your company/author name?'
@@ -99,9 +98,11 @@ module.exports = yeoman.Base.extend({
       this.appKeywords = props.appKeywords;
       this.appAuthor = props.appAuthor;
 
-      this.slugifiedAppName = s(this.appName).underscored().slugify().value();
-      this.humanizedAppName = s(this.appName).humanize().value();
-      this.capitalizedAppAuthor = s(this.appAuthor).capitalize().value();
+      this.slugifiedAppName = s(this.appName).underscored().slugify().value(); // demo-name
+      this.camelAppName = s(this.slugifiedAppName).camelize().value(); // demoName
+      this.firstCapCamelAppName = s(this.camelAppName).capitalize().value(); // DemoName
+      this.humanizedAppName = s(this.slugifiedAppName).humanize().value(); // Demo name
+      this.titleAppName = s(this.humanizedAppName).titleize().value(); // Demo Name
     });
   },
 
@@ -109,14 +110,28 @@ module.exports = yeoman.Base.extend({
    * 更新package.json数据
    */
   updatePackage() {
-    var pkg = this.fs.readJSON(this.destinationPath(folder + '/package.json'), {});
+    let pkg = this.fs.readJSON(this.destinationPath(folder + '/package.json'), {});
     extend(pkg, {
-      name: this.appName,
+      name: this.slugifiedAppName,
       description: this.appDescription,
       author: this.appAuthor,
       keywords: this.appKeywords.split(',')
     });
     this.fs.writeJSON(this.destinationPath(folder + '/package.json'), pkg);
+  },
+
+    /**
+   * 替换关键字标识
+   */
+  replaceKeywords() {
+    utils.replaceFiles(folder,
+      {
+        // 'Daniel Panel': this.titleAppName,
+        // '\\[author name\\]': this.appAuthor,
+      },
+      [
+        'node_modules/**'
+      ])
   },
 
   /**

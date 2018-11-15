@@ -18,8 +18,7 @@
   ],
   "repository": "https://github.com/daniel-dx/generator-dx-generator.git",
   "scripts": {
-    "test": "gulp",
-    "prepublish": "gulp nsp"
+    "test": "gulp"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -27,14 +26,14 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "deep-extend": "^0.4.0",
+    "fs-extra": "^2.1.2",
     "generator-node": "^1.7.0",
     "inquirer-npm-name": "^2.0.0",
     "lodash": "^4.6.1",
     "mkdirp": "^0.5.1",
     "superb": "^1.0.0",
     "yeoman-generator": "^0.23.3",
-    "yosay": "^1.0.2",
-    "fs-extra": "^2.1.2"
+    "yosay": "^1.0.2"
   },
   "devDependencies": {
     "gulp": "^3.6.0",

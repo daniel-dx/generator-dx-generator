@@ -1,7 +1,6 @@
 'use strict';
-var path = require('path');
-var generators = require('yeoman-generator');
-var superb = require('superb');
+const path = require('path');
+const generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
   constructor: function() {
@@ -16,7 +15,7 @@ module.exports = generators.Base.extend({
 
   writing() {
 
-    var generatorName = this.fs.readJSON(this.destinationPath('package.json')).name;
+    let generatorName = this.fs.readJSON(this.destinationPath('package.json')).name;
 
     this.fs.copyTpl(
       this.templatePath('index.js'),

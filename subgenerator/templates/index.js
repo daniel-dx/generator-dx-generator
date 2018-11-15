@@ -1,21 +1,21 @@
 'use strict';
 
-var _ = require('lodash');
-var glob = require("glob");
-var path = require('path');
-var s = require('underscore.string');
-var yeoman = require('yeoman-generator');
+const _ = require('lodash');
+const glob = require("glob");
+const path = require('path');
+const s = require('underscore.string');
+const yeoman = require('yeoman-generator');
 
-var logger = require('../app/logger');
-var utils = require('../app/utils');
+const logger = require('../app/logger');
+const utils = require('../app/utils');
 
-var scrFolderPath, scrFolder;
+let scrFolderPath, scrFolder;
 
 module.exports = yeoman.Base.extend({
 
   prompting() {
 
-    // var prompts = [{
+    // let prompts = [{
     //   type: 'string',
     //   name: 'name',
     //   message: 'Would you like to enable this option?',
@@ -40,11 +40,11 @@ module.exports = yeoman.Base.extend({
 
   copyTemplates() {
 
-    // var done = this.async();
+    // let done = this.async();
 
     // glob(this.templatePath() + "/**/*.*", {}, (er, files) => {
     //   _.each(files, filePath => {
-    //     var toFileName = path.parse(filePath).base;
+    //     let toFileName = path.parse(filePath).base;
     //     this.fs.copyTpl(
     //       filePath,
     //       path.resolve(scrFolderPath, toFileName),
@@ -59,7 +59,7 @@ module.exports = yeoman.Base.extend({
 
   updateContent() {
 
-    // var fullPath = 'src/components/App.vue';
+    // let fullPath = 'src/components/App.vue';
     // utils.rewriteFile({
     //   fileRelativePath      : fullPath,
     //   insertPrev: true,

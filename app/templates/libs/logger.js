@@ -1,45 +1,45 @@
 'use strict';
 
-var chalk = require('chalk');
+const chalk = require('chalk');
 
-var log = function log(value) {
-  console.log(value);
+const log = function log(...value) {
+  console.log.apply(this, value);
 };
 
-log.log = function(value) {
-  console.log(value);
+log.log = function(...value) {
+  console.log.apply(this, value);
 };
 
-log.green = function(value) {
-  console.log(chalk.green(value));
+log.green = function(...value) {
+  console.log(chalk.green.apply(this, value));
 };
 
-log.blue = function(value) {
-  console.log(chalk.blue(value));
+log.blue = function(...value) {
+  console.log(chalk.blue.apply(this, value));
 };
 
-log.red = function(value) {
-  console.log(chalk.red(value));
+log.red = function(...value) {
+  console.log(chalk.red.apply(this, value));
 };
 
-log.yellow = function(value) {
-  console.log(chalk.yellow(value));
+log.yellow = function(...value) {
+  console.log(chalk.yellow.apply(this, value));
 };
 
-log.magenta = function(value) {
-  console.log(chalk.magenta(value));
+log.magenta = function(...value) {
+  console.log(chalk.magenta.apply(this, value));
 };
 
-log.cyan = function(value) {
-  console.log(chalk.cyan(value));
+log.cyan = function(...value) {
+  console.log(chalk.cyan.apply(this, value));
 };
 
-log.white = function(value) {
-  console.log(chalk.white(value));
+log.white = function(...value) {
+  console.log(chalk.white.apply(this, value));
 };
 
-log.gray = function(value) {
-  console.log(chalk.gray(value));
+log.gray = function(...value) {
+  console.log(chalk.gray.apply(this, value));
 };
 
 module.exports = log;
