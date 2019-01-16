@@ -1,7 +1,6 @@
 'use strict';
 
 const fs = require('fs');
-const path = require('path');
 const child_process = require('child_process');
 const replace = require('replace-in-file');
 const logger = require('./logger');
@@ -15,7 +14,7 @@ function escapeRegExp(str) {
  *
  * @param {
  *  haystack, // 要处理的内容
- *  splicable, // 追加的内容, 是数组类型，如['', '']。当isAppend=true时，数组中的字符串项会串连成一行；当isAppend=false时，数组中的每一项字符串都会以换行符拼接起来
+ *  splicable, // 追加的内容, 是数组类型，如['', '']。当isAppend=true时，数组中的字符串项会串连成一行；当isAppend=false时，数组中的每一项字符串都会以换行符拼接起来
  *  needle, // 查找的标识
  *  isAppend, // 是否追加到该行，默认是false
  *  appendAfter, // 追加到该行的位置，是插入行首还是行尾。默认是行尾。只有isAppend为true时有效。
@@ -76,8 +75,7 @@ function rewrite({haystack, splicable, needle, isAppend=false, appendAfter=true,
  * 根据标识定位位置，并将提供的内容追到该位置，文件将被重写成最新内容
  *
  * @param {
- *  destRoot, // 生成项目的根路径
- *  fileRelativePath, // 文件相对于destRoot的相对路径
+ *  filePath, // 文件路径
  *  splicable, // 追加的内容, 是数组类型，如['', '']。当isAppend=true时，数组中的字符串项会串连成一行；当isAppend=false时，数组中的每一项字符串都会以换行符拼接起来
  *  needle, // 查找的标识
  *  isAppend, // 是否追加到该行，默认是false
@@ -85,8 +83,8 @@ function rewrite({haystack, splicable, needle, isAppend=false, appendAfter=true,
  *  insertPrev // 是否插入到该行的前端还是后面。默认是后面。只有isAppend为false时有效
  * }
  */
-function rewriteFile({destRoot = process.cwd(), fileRelativePath, splicable, needle, isAppend=false, appendAfter=true, insertPrev=false}) {
-  let fullPath = path.join(destRoot, fileRelativePath);
+function rewriteFile({filePath, splicable, needle, isAppend=false, appendAfter=true, insertPrev=false}) {
+  let fullPath = filePath;
   let haystack = fs.readFileSync(fullPath, 'utf8');
   let body = rewrite({haystack: haystack, splicable: splicable, needle: needle, isAppend: isAppend, appendAfter: appendAfter, insertPrev: insertPrev});
 

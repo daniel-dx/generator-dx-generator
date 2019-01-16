@@ -59,9 +59,8 @@ module.exports = yeoman.Base.extend({
 
   updateContent() {
 
-    // let fullPath = 'src/components/App.vue';
     // utils.rewriteFile({
-    //   fileRelativePath      : fullPath,
+    //   filePath  : this.destinationPath('src/components/App.vue'),
     //   insertPrev: true,
     //   needle    : "<!-- Don't touch me -->",
     //   splicable : [
