@@ -1,39 +1,35 @@
 'use strict';
 const path = require('path');
-const generators = require('yeoman-generator');
+const Generator = require('yeoman-generator');
+const superb = require('superb');
 
-module.exports = generators.Base.extend({
-  constructor: function() {
-    generators.Base.apply(this, arguments);
+module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
 
-    this.argument('namespace', {
+    this.argument('name', {
       type: String,
       required: true,
-      description: 'Generator namespace'
+      description: 'Generator name'
     });
-  },
+  }
 
   writing() {
-
-    let generatorName = this.fs.readJSON(this.destinationPath('package.json')).name;
+    const generatorName = this.fs.readJSON(this.destinationPath('package.json')).name;
 
     this.fs.copyTpl(
       this.templatePath('index.js'),
-      this.destinationPath(path.join('generators', this.namespace, 'index.js'))
+      this.destinationPath(path.join('generators', this.options.name, 'index.js')),
+      {
+        // Escape apostrophes from superb to not conflict with JS strings
+        superb: superb.random().replace("'", "\\'"),
+        generatorName
+      }
     );
 
     this.fs.copy(
       this.templatePath('templates/**'),
-      this.destinationPath(path.join('generators', this.namespace, 'templates'))
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('test.js'),
-      this.destinationPath('test/' + this.namespace + '.js'),
-      {
-        namespace: this.namespace,
-        generatorName: generatorName
-      }
+      this.destinationPath(path.join('generators', this.options.name, 'templates'))
     );
   }
-});
+};

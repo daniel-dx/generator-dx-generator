@@ -2,7 +2,7 @@
 
 const chalk = require('chalk');
 
-const log = function log(...value) {
+const log = function(...value) {
   console.log.apply(this, value);
 };
 

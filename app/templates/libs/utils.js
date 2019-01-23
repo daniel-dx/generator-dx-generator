@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const child_process = require('child_process');
+const childProcess = require('child_process');
 const replace = require('replace-in-file');
 const logger = require('./logger');
 
@@ -23,16 +23,22 @@ function escapeRegExp(str) {
  *
  * @returns string 处理过后的内容
  */
-function rewrite({haystack, splicable, needle, isAppend=false, appendAfter=true, insertPrev=false}) {
-
-  // check if splicable is already in the body text
-  let re = new RegExp(splicable.map(line => '\s*' + escapeRegExp(line)).join('\n'));
+function rewrite({
+  haystack,
+  splicable,
+  needle,
+  isAppend = false,
+  appendAfter = true,
+  insertPrev = false
+}) {
+  // Check if splicable is already in the body text
+  const re = new RegExp(splicable.map(line => 's*' + escapeRegExp(line)).join('\n'));
 
   if (re.test(haystack)) {
     return haystack;
   }
 
-  let lines = haystack.split('\n');
+  const lines = haystack.split('\n');
 
   let otherwiseLineIndex = 0;
   lines.forEach((line, i) => {
@@ -57,15 +63,21 @@ function rewrite({haystack, splicable, needle, isAppend=false, appendAfter=true,
    * 插入到该行的前面一行: insertPrev=true
    * 追加到该行的后面一行: insertPrev=false default
    */
-  if (isAppend) { // 追回到该行
+  if (isAppend) {
+    // 追回到该行
     if (appendAfter) {
       lines[otherwiseLineIndex] += splicable.join('');
     } else {
       lines[otherwiseLineIndex] = splicable.join('') + lines[otherwiseLineIndex];
     }
-  } else { // 插入新行
-    let n = insertPrev ? 0 : 1;
-    lines.splice(otherwiseLineIndex + n, 0, splicable.map(line => spaceStr + line).join('\n'));
+  } else {
+    // 插入新行
+    const n = insertPrev ? 0 : 1;
+    lines.splice(
+      otherwiseLineIndex + n,
+      0,
+      splicable.map(line => spaceStr + line).join('\n')
+    );
   }
 
   return lines.join('\n');
@@ -83,10 +95,24 @@ function rewrite({haystack, splicable, needle, isAppend=false, appendAfter=true,
  *  insertPrev // 是否插入到该行的前端还是后面。默认是后面。只有isAppend为false时有效
  * }
  */
-function rewriteFile({filePath, splicable, needle, isAppend=false, appendAfter=true, insertPrev=false}) {
-  let fullPath = filePath;
-  let haystack = fs.readFileSync(fullPath, 'utf8');
-  let body = rewrite({haystack: haystack, splicable: splicable, needle: needle, isAppend: isAppend, appendAfter: appendAfter, insertPrev: insertPrev});
+function rewriteFile({
+  filePath,
+  splicable,
+  needle,
+  isAppend = false,
+  appendAfter = true,
+  insertPrev = false
+}) {
+  const fullPath = filePath;
+  const haystack = fs.readFileSync(fullPath, 'utf8');
+  const body = rewrite({
+    haystack,
+    splicable,
+    needle,
+    isAppend,
+    appendAfter,
+    insertPrev
+  });
 
   fs.writeFileSync(fullPath, body);
 }
@@ -102,7 +128,7 @@ function rewriteFile({filePath, splicable, needle, isAppend=false, appendAfter=t
  */
 function exec(cmd) {
   return new Promise((resolve, reject) => {
-    child_process.exec(cmd, function(err, res) {
+    childProcess.exec(cmd, (err, res) => {
       if (err) {
         reject(err);
       } else {
@@ -110,7 +136,7 @@ function exec(cmd) {
       }
     });
   });
-};
+}
 
 /**
  * 替换文件内容
@@ -119,12 +145,12 @@ function exec(cmd) {
  * @param {Array} ignores ['node_modules/**']
  */
 async function replaceFiles(baseDir, replaceInfo, ignores) {
-  let from = Object.keys(replaceInfo).map(key => new RegExp(key, 'g'));
-  let to = Object.values(replaceInfo);
+  const from = Object.keys(replaceInfo).map(key => new RegExp(key, 'g'));
+  const to = Object.values(replaceInfo);
   const options = {
     files: `${baseDir}/**/*.*`,
-    from: from,
-    to: to,
+    from,
+    to,
     ignore: ignores
   };
   try {
@@ -139,5 +165,5 @@ module.exports = {
   rewrite,
   rewriteFile,
   exec,
-  replaceFiles,
+  replaceFiles
 };
