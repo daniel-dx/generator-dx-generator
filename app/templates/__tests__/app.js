@@ -17,12 +17,22 @@ describe('generator:app', () => {
           appName: 'demo-bar',
           appDescription: 'just a demo project',
           appKeywords: 'demo,bar',
-          appAuthor: 'Sarah'
+          appAuthor: 'Daniel'
         });
     });
 
     it('created and CD into a folder named like the demo-bar', () => {
       assert.equal(path.basename(process.cwd()), 'demo-bar');
+    });
+
+    it('fills package.json with correct information', () => {
+      // eslint-disable-next-line new-cap
+      assert.JSONFileContent('package.json', {
+        name: 'demo-bar',
+        keywords: ['demo', 'bar'],
+        description: 'just a demo project',
+        author: 'Daniel'
+      });
     });
   });
 });

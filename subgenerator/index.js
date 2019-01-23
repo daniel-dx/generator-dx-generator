@@ -31,5 +31,10 @@ module.exports = class extends Generator {
       this.templatePath('templates/**'),
       this.destinationPath(path.join('generators', this.options.name, 'templates'))
     );
+    this.fs.copyTpl(
+      this.templatePath('__tests__/subgenerator.js'),
+      this.destinationPath(`__tests__/${this.options.name}.js`),
+      this.options
+    );
   }
 };

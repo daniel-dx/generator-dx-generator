@@ -9,26 +9,17 @@ describe('generator:subgenerator', () => {
     return helpers
       .run(path.join(__dirname, '../subgenerator'))
       .cd(path.join(__dirname, '../temp/generator-foo'))
-      .withArguments(['foo'])
+      .withArguments(['bar'])
       .withOptions({
         force: true
       });
   });
 
-  it.only('creates files', () => {
+  it('creates files', () => {
     assert.file([
-      'generators/foo/index.js',
-      'generators/foo/templates/dummyfile.txt',
-      '__tests__/foo.js'
+      'generators/bar/index.js',
+      'generators/bar/templates/dummyfile.txt',
+      '__tests__/bar.js'
     ]);
-  });
-
-  it('configures the test file', () => {
-    assert.fileContent('__tests__/foo.js', "describe('generator-foo:foo");
-    assert.fileContent('__tests__/foo.js', '../generators/foo');
-  });
-
-  it('escapes possible apostrophes from superb', () => {
-    assert.fileContent('generators/foo/index.js', "Welcome to the cat\\'s meow");
   });
 });
