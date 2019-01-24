@@ -14,7 +14,6 @@ describe('generator:app', () => {
         .inDir(path.join(__dirname, '../temp'))
         .withPrompts({
           name: 'demo-bar',
-          appName: 'demo-bar',
           appDescription: 'just a demo project',
           appKeywords: 'demo,bar',
           appAuthor: 'Daniel'

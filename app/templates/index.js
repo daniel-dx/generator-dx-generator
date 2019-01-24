@@ -41,7 +41,7 @@ module.exports = class extends Generator {
   promptForFolder() {
     const prompt = {
       name: 'name',
-      message: 'In which folder would you like the project to be generated? ',
+      message: 'What would you like to call your application?',
       default: 'demo-project'
     };
 
@@ -78,11 +78,6 @@ module.exports = class extends Generator {
   getPrompts() {
     const prompts = [
       {
-        name: 'appName',
-        message: 'What would you like to call your application?',
-        default: this.props.name
-      },
-      {
         name: 'appDescription',
         message: 'How would you describe your application?',
         default: ''
@@ -99,7 +94,7 @@ module.exports = class extends Generator {
     ];
 
     return this.prompt(prompts).then(props => {
-      this.appName = props.appName;
+      this.appName = this.props.name;
       this.appDescription = props.appDescription;
       this.appKeywords = props.appKeywords;
       this.appAuthor = props.appAuthor;
@@ -107,19 +102,19 @@ module.exports = class extends Generator {
       this.slugifiedAppName = s(this.appName)
         .underscored()
         .slugify()
-        .value(); // Demo-name
+        .value(); // value: demo-name
       this.camelAppName = s(this.slugifiedAppName)
         .camelize()
-        .value(); // DemoName
+        .value(); // value: demoName
       this.firstCapCamelAppName = s(this.camelAppName)
         .capitalize()
-        .value(); // DemoName
+        .value(); // value: DemoName
       this.humanizedAppName = s(this.slugifiedAppName)
         .humanize()
-        .value(); // Demo name
+        .value(); // value: Demo name
       this.titleAppName = s(this.humanizedAppName)
         .titleize()
-        .value(); // Demo Name
+        .value(); // value: Demo Name
     });
   }
 
@@ -154,7 +149,7 @@ module.exports = class extends Generator {
   /**
    * 安装依赖module
    */
-  installing() {
+  install() {
     logger.green('Running npm install for you....');
     logger.green('This may take a couple minutes.');
 
