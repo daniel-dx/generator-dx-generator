@@ -119,20 +119,6 @@ module.exports = class extends Generator {
   }
 
   /**
-   * 更新package.json数据
-   */
-  updatePackage() {
-    const pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    extend(pkg, {
-      name: this.props.slugifiedAppName,
-      description: this.props.appDescription,
-      author: this.props.appAuthor,
-      keywords: this.props.appKeywords.split(',')
-    });
-    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
-  }
-
-  /**
    * 替换关键字标识
    */
   replaceKeywords() {
@@ -144,6 +130,20 @@ module.exports = class extends Generator {
       },
       ['node_modules/**']
     );
+  }
+
+   /**
+   * 更新package.json数据
+   */
+  updatePackage() {
+    const pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+    extend(pkg, {
+      name: this.props.slugifiedAppName,
+      description: this.props.appDescription,
+      author: this.props.appAuthor,
+      keywords: this.props.appKeywords.split(',')
+    });
+    return this.fs.writeJSON(this.destinationPath('package.json'), pkg);
   }
 
   /**
