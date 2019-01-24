@@ -94,25 +94,25 @@ module.exports = class extends Generator {
     ];
 
     return this.prompt(prompts).then(props => {
-      this.appName = this.props.name;
-      this.appDescription = props.appDescription;
-      this.appKeywords = props.appKeywords;
-      this.appAuthor = props.appAuthor;
+      this.props.appName = this.props.name;
+      this.props.appDescription = props.appDescription;
+      this.props.appKeywords = props.appKeywords;
+      this.props.appAuthor = props.appAuthor;
 
-      this.slugifiedAppName = s(this.appName)
+      this.props.slugifiedAppName = s(this.props.appName)
         .underscored()
         .slugify()
         .value(); // value: demo-name
-      this.camelAppName = s(this.slugifiedAppName)
+      this.props.camelAppName = s(this.props.slugifiedAppName)
         .camelize()
         .value(); // value: demoName
-      this.firstCapCamelAppName = s(this.camelAppName)
+      this.props.firstCapCamelAppName = s(this.props.camelAppName)
         .capitalize()
         .value(); // value: DemoName
-      this.humanizedAppName = s(this.slugifiedAppName)
+      this.props.humanizedAppName = s(this.props.slugifiedAppName)
         .humanize()
         .value(); // value: Demo name
-      this.titleAppName = s(this.humanizedAppName)
+      this.props.titleAppName = s(this.props.humanizedAppName)
         .titleize()
         .value(); // value: Demo Name
     });
@@ -124,10 +124,10 @@ module.exports = class extends Generator {
   updatePackage() {
     const pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     extend(pkg, {
-      name: this.slugifiedAppName,
-      description: this.appDescription,
-      author: this.appAuthor,
-      keywords: this.appKeywords.split(',')
+      name: this.props.slugifiedAppName,
+      description: this.props.appDescription,
+      author: this.props.appAuthor,
+      keywords: this.props.appKeywords.split(',')
     });
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
   }
@@ -136,11 +136,11 @@ module.exports = class extends Generator {
    * 替换关键字标识
    */
   replaceKeywords() {
-    utils.replaceFiles(
+    return utils.replaceFiles(
       this.destinationPath(),
       {
-        // 'Daniel Panel': this.titleAppName,
-        // '\\[author name\\]': this.appAuthor,
+        // 'Daniel Panel': this.props.titleAppName,
+        // '\\[author name\\]': this.props.appAuthor,
       },
       ['node_modules/**']
     );

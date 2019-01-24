@@ -40,7 +40,7 @@ module.exports = class extends Generator {
 
   updateContent() {
     // 注意：不要去操作copyTemplates所涉及的文件，要操作已经确认存在的文件
-    utils.rewriteFile({
+    return utils.rewriteFile({
       filePath: this.destinationPath('README.md'),
       insertPrev: true,
       needle: "<!-- Don't touch me -->",
